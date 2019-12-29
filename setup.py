@@ -1,9 +1,10 @@
-import pathlib
+import os.path
 from setuptools import setup
 
-HERE = pathlib.Path(__file__).parent
+HERE = os.path.abspath(os.path.dirname(__file__))
 
-README = (HERE / "README.md").read_text()
+with open(os.path.join(HERE, "README.md")) as fid:
+    README = fid.read()
 
 setup(
     name="photoley",
@@ -21,7 +22,8 @@ setup(
     ],
     packages=["photoley"],
     include_package_data=True,
-    # install_requires=[""],
+    # install_requires=[""],,
+    data_files=[('photoley/config.ini')],
     entry_points={
         "console_scripts": [
             "photoley=photoley.__main__:main",
