@@ -1,5 +1,12 @@
-import argparse, string
+import argparse
+import string
+import os
+
+from configparser import ConfigParser
 from enum import Enum
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 parser = argparse.ArgumentParser(
     prog='getimg',
@@ -48,6 +55,15 @@ def get_url():
 
     return url
 
+def main():
+    cfg = ConfigParser()
+    cfg.read(os.path.join(BASE_DIR, 'config.ini'))
+
+    global UNSPLASH_URL
+    UNSPLASH_URL = cfg.get("photoley", "url")
+
+    print(get_url())
+
 if __name__ == "__main__":
     args = parser.parse_args()
-    print(get_url())
+    main()
