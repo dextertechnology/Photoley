@@ -10,7 +10,7 @@ import photoley
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-UNSPLASH_URL = 'https://source.unsplash.com/random'
+UNSPLASH_URL = 'https://source.unsplash.com'
 
 def check_case(arg):
     _lcase = string.ascii_lowercase
@@ -68,6 +68,9 @@ def main():
         
         if _q:=args.query:
             url += f"?{_q.lower()}"
+
+        if not _u and not _c:
+            url = url.replace('.com', '.com/random')
 
         return url
     

@@ -8,4 +8,4 @@ install:
 		$(PYTHON_FILE) $(SETUP_FILE) install
 
 clean:
-		rm -rf build *.egg-info
+		rm -rf dist build *.egg-info
