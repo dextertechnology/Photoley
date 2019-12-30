@@ -1,32 +1,17 @@
 import argparse
-import string
 import os
 
 from configparser import ConfigParser
-from enum import Enum
 
 import photoley
+from photos.photos import Photos
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 UNSPLASH_URL = 'https://source.unsplash.com'
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
-def check_case(arg):
-    _lcase = string.ascii_lowercase
-    for a in arg:
-        if not a in _lcase:
-            raise Exception("Supply all string in lowercase with no symbols")
-
-class Resolution(str, Enum):
-    hd = "1920x1080"
-    fhd = "1366x768"
-    qhd = "2560x1440"
-    uhd = "3840x2160"
-
-def check_resolution(arg):
-    "TODO: Check if resolution is from Resolution list"
-    pass
 
 def main():
     parser = argparse.ArgumentParser(
@@ -51,30 +36,23 @@ def main():
     cfg = ConfigParser()
     cfg.read(os.path.join(BASE_DIR, 'config.ini'))
 
-    global UNSPLASH_URL
-    UNSPLASH_URL = cfg.get("photoley", "url")
+    global UNSPLASH_URL, MEDIA_DIR
 
-    def get_url():
-        url = f"{UNSPLASH_URL}"
-        if _r:=args.resolution:
-            check_resolution(_r)
-            url += f"/{_r}"
-
-        if _u:=args.user:
-            url += f"/user/{_u.lower()}"
-        
-        if _c:=args.collection:
-            url += f"/collection/{_c}"
-        
-        if _q:=args.query:
-            url += f"?{_q.lower()}"
-
-        if not _u and not _c:
-            url = url.replace('.com', '.com/random')
-
-        return url
+    try:
+        UNSPLASH_URL = cfg.get("photoley", "url")
+    except Exception:
+        print("No config found for url. \
+            \nDefault value is set instead.")
     
-    print(get_url())
+    try:
+        MEDIA_DIR = cfg.get("photoley", "media_dir")
+    except Exception:
+        print("No config found for media_dir. \
+            \nDefault value is set instead.")
+
+    p = Photos(args=args, url=UNSPLASH_URL, dir=MEDIA_DIR)
+    p.save()
+
 
 if __name__ == "__main__":
     main()
