@@ -3,7 +3,7 @@ import os
 
 from configparser import ConfigParser
 
-import photoley
+from photoley import config
 from photos.photos import Photos
 
 
@@ -24,8 +24,8 @@ def main():
         '--version',
         help="Check version",
         action="version",
-        version=f'%(prog)s {photoley.__version__}'
-    )
+        version=f'%(prog)s {config.__version__}'
+    )   
     parser.add_argument('-q', '--query', metavar='', type=str, help="Comma-separated string search query to get relevant random image")
     parser.add_argument('-r', '--resolution', metavar='', type=str, help="Resolution of screen. eg: 1920x1080, 1366x768")
     parser.add_argument('-u', '--user', metavar='', type=str, help="Username that exists in unsplash eg: erondu")
