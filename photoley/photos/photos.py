@@ -1,11 +1,10 @@
 import uuid
 from urllib import request
 
-from photos.get_url import GetUrl
-from utilities.stdout import hash_decorator, PrintProgressBar
+from .get_url import GetUrl
+from photoley.photoley import config
+from photoley.utilities.stdout import hash_decorator, PrintProgressBar
 
-
-MEDIA_DIR = '/home/dexter/dextertechnology/Photoley_all/media_cdn'
 
 class Photos:
     def __init__(self, **kwargs):
@@ -19,8 +18,8 @@ class Photos:
         uid = str(uuid.uuid4())
 
         req = request.urlopen(get_url)
-        print(req.headers.get('Content-Length'))
-        with open(f"{MEDIA_DIR}/{uid}.jpg", 'wb') as fp:
+
+        with open(f"{config.MEDIA_DIR}/{uid}.jpg", 'wb') as fp:
             l = int(req.headers.get('Content-Length'))//1024
             PrintProgressBar(0, l, prefix= 'Progress:', suffix= 'Complete', length= 50)
 
@@ -34,4 +33,5 @@ class Photos:
 
 
         print('\n', get_url)
+        print(f"Saved in {str(config.MEDIA_DIR)}")
         return get_url

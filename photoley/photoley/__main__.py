@@ -1,16 +1,8 @@
 import argparse
 import os
 
-from configparser import ConfigParser
-
-from photoley import config
-from photos.photos import Photos
-
-
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
-UNSPLASH_URL = 'https://source.unsplash.com'
-MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+from . import config
+from photoley.photos.photos import Photos
 
 
 def main():
@@ -24,7 +16,7 @@ def main():
         '--version',
         help="Check version",
         action="version",
-        version=f'%(prog)s {config.__version__}'
+        version=f'%(prog)s {config.VERSION}'
     )   
     parser.add_argument('-q', '--query', metavar='', type=str, help="Comma-separated string search query to get relevant random image")
     parser.add_argument('-r', '--resolution', metavar='', type=str, help="Resolution of screen. eg: 1920x1080, 1366x768")
@@ -33,26 +25,5 @@ def main():
 
     args = parser.parse_args()
 
-    cfg = ConfigParser()
-    cfg.read(os.path.join(BASE_DIR, 'config.ini'))
-
-    global UNSPLASH_URL, MEDIA_DIR
-
-    try:
-        UNSPLASH_URL = cfg.get("photoley", "url")
-    except Exception:
-        print("No config found for url. \
-            \nDefault value is set instead.")
-    
-    try:
-        MEDIA_DIR = cfg.get("photoley", "media_dir")
-    except Exception:
-        print("No config found for media_dir. \
-            \nDefault value is set instead.")
-
-    p = Photos(args=args, url=UNSPLASH_URL, dir=MEDIA_DIR)
+    p = Photos(args=args, url=config.UNSPLASH_URL, dir=config.MEDIA_DIR)
     p.save()
-
-
-if __name__ == "__main__":
-    main()

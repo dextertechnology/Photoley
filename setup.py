@@ -20,13 +20,17 @@ setup(
         "License :: OSI Approved :: GNU LGPL 3.0",
         "Programming Language :: Python :: 3.8.0"
     ],
-    packages=["photoley"],
+    packages=[
+        "photoley",
+        "photoley.photoley",
+        "photoley.photos",
+        "photoley.utilities"
+    ],
     include_package_data=True,
-    # install_requires=[""],,
-    data_files=[('photoley/config.ini')],
+    # install_requires=[""],
     entry_points={
         "console_scripts": [
-            "photoley=photoley.__main__:main",
+            "photoley=photoley.manage:runner",
         ]
     },
 )
