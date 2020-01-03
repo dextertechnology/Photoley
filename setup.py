@@ -1,5 +1,5 @@
 import os.path
-from setuptools import setup
+from setuptools import setup, find_packages
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -20,12 +20,7 @@ setup(
         "License :: OSI Approved :: GNU LGPL 3.0",
         "Programming Language :: Python :: 3.8.0"
     ],
-    packages=[
-        "photoley",
-        "photoley.photoley",
-        "photoley.photos",
-        "photoley.utilities"
-    ],
+    packages=find_packages(),
     include_package_data=True,
     # install_requires=[""],
     entry_points={

@@ -4,6 +4,7 @@ from urllib import request
 from .get_url import GetUrl
 from photoley.photoley import config
 from photoley.utilities.stdout import hash_decorator, PrintProgressBar
+from photoley.wallpaper.xfce_four.wall_setter import set_wallpaper as xfce_four_sw
 
 
 class Photos:
@@ -11,6 +12,12 @@ class Photos:
         self.url = kwargs.get('url', None)
         self.args = kwargs.get('args', None)
         self.dir = kwargs.get('dir', None)
+
+    def _check_sw_exist(self, img):
+        if self.args.setwall:
+            print("True")
+            xfce_four_sw(img)
+        pass
 
     @hash_decorator
     def save(self):
@@ -31,6 +38,7 @@ class Photos:
                 fp.write(chunk)
                 PrintProgressBar(i + 1, l, prefix= 'Progress:', suffix= 'Complete', length= 50)
 
+        self._check_sw_exist(f"{uid}.jpg")
 
         print('\n', get_url)
         print(f"Saved in {str(config.MEDIA_DIR)}")

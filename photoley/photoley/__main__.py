@@ -22,6 +22,7 @@ def main():
     parser.add_argument('-r', '--resolution', metavar='', type=str, help="Resolution of screen. eg: 1920x1080, 1366x768")
     parser.add_argument('-u', '--user', metavar='', type=str, help="Username that exists in unsplash eg: erondu")
     parser.add_argument('-c', '--collection', metavar='', type=int, help="Integer: Collection that exists in unsplash eg: 190727")
+    parser.add_argument('-w', '--setwall', action="store_true", help="Set wallpaper for Desktop")
 
     args = parser.parse_args()
 
