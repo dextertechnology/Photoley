@@ -15,7 +15,6 @@ class Photos:
 
     def _check_sw_exist(self, img):
         if self.args.setwall:
-            print("True")
             xfce_four_sw(img)
         pass
 
