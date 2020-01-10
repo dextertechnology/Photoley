@@ -1,7 +1,8 @@
 import os
 import subprocess
 
-from photoley.photoley.config import MEDIA_DIR
+from photoley.photoley.config import MEDIA_DIR, CONFIG_DIR
+from photoley.utilities.json_parser import JSONReader
 
 
 def set_wallpaper(img, **kwargs):
@@ -24,9 +25,11 @@ def set_wallpaper(img, **kwargs):
         Use that as a property.
     """
 
-    # TODO: use config file for channel and property
-    _property = "/backdrop/screen0/monitorDP1/workspace0/last-image"
-    _channel = "xfce4-desktop"
+    data = JSONReader(os.path.join(CONFIG_DIR, 'photoley.json'))
+    # _property = "/backdrop/screen0/monitoreDP-1/workspace2/last-image"
+    # _channel = "xfce4-desktop"
+    _property = data.read_line('property')
+    _channel = data.read_line('channel')
 
     _img = os.path.abspath(os.path.join(MEDIA_DIR, img))
 

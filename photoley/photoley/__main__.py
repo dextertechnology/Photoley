@@ -4,6 +4,7 @@ import sys
 
 from . import config
 from photoley.photos.photos import Photos
+from photoley.configuration.configure import Configure
 
 
 class Main(object):
@@ -43,7 +44,10 @@ photo       Using unsplash, fetch random wallpaper with specific size and catego
         )
 
         parser.add_argument('-c', '--channel',  metavar='', type=str, help="Set Desktop Screen channel")
+        parser.add_argument('-p', '--property',  metavar='', type=str, help="Set Desktop Screen property")
         args = parser.parse_args(sys.argv[2:])
+
+        return Configure(args).configure()
 
     def photo(self):
         parser = argparse.ArgumentParser(
